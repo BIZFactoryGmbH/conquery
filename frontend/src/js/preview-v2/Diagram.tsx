@@ -210,7 +210,6 @@ export default function Diagram({
               // This does not work with the typescript definition of chart.js
               // -> cast to unknown and then to undefined
               title: (title) => {
-                console.log(title);
                 return formatNumber(parseFloat(title[0].label))
               },
               label: (context) => {

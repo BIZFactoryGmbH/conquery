@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 
 import { StateT } from "../app/reducers";
 
@@ -20,6 +20,7 @@ import SelectBox from "./SelectBox";
 import Table from "./Table";
 import { closePreview } from "./actions";
 import { PreviewStateT } from "./reducer";
+import { toggleDisplayTooltip } from "../tooltip/actions";
 
 const FullScreen = styled("div")`
   height: 100%;
@@ -91,6 +92,17 @@ export default function Preview() {
   useHotkeys("esc", () => {
     onClose();
   });
+
+  const store = useStore();
+  useEffect(() => {
+    if ((store.getState() as StateT).tooltip.displayTooltip) {
+      dispatch(toggleDisplayTooltip());
+      return () => {
+        dispatch(toggleDisplayTooltip());
+      }
+    }
+  })
+  
 
   useEffect(() => {
     setPage(0);
