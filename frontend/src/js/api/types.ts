@@ -599,6 +599,7 @@ export type NumberStatistics = BaseStatistics & {
   stdDev: number;
   min: number;
   max: number;
+  sum: number;
   samples: number[];
 };
 

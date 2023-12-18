@@ -70,6 +70,10 @@ export default function DiagramModal({
                   "name": t("common.std"),
                   "value": formatNumber(statistic.stdDev)
                 },
+                {
+                  "name": t("common.sum"),
+                  "value": formatNumber(statistic.sum)
+                },
               ]
             }
             rowKey={(_, index) => `row_${index}`}

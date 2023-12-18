@@ -43,11 +43,13 @@ export default function Diagram({
   const theme = useTheme();
 
   function transformStringStatsToData(stats: StringStatistics): ChartData<"bar"> {
+    const sorted = Object.entries(stats.histogram).sort((a, b) => b[1] - a[1]);
+
     return {
-      labels: Object.keys(stats.histogram),
+      labels: sorted.map((entry) => entry[0]),
       datasets: [
         {
-          data: Object.values(stats.histogram),
+          data: sorted.map((entry) => entry[1]),
           backgroundColor: `rgba(${hexToRgbA(theme.col.blueGrayDark)}, 1)`,
           borderWidth: 1,
         },
@@ -84,11 +86,6 @@ export default function Diagram({
   }
   
   function transformDateStatsToData(stats: DateStatistics): ChartData<"line"> {
-    // loop over all dates in date range
-    // check if month is present in stats
-    // if yes add months value to data
-    // if no add quater values to data for the whole quater (for each month)
-  
     const labels: string[] = [];
     const values: number[] = [];
     const start = parseStdDate(stats.span.min);
@@ -190,7 +187,7 @@ export default function Diagram({
             ticks: {
               callback: (index: number) => {
                 // How can I return the scale here?!
-                return (getValueForIndex<number>(index)||0).toLocaleString();
+                return formatNumber(getValueForIndex<number>(index)||0);
               },
             }
           },
@@ -212,7 +209,10 @@ export default function Diagram({
               // To remove the title from the tooltip a null is needed. 
               // This does not work with the typescript definition of chart.js
               // -> cast to unknown and then to undefined
-              title: (title) => formatNumber(title[0].raw as number),
+              title: (title) => {
+                console.log(title);
+                return formatNumber(parseFloat(title[0].label))
+              },
               label: (context) => {
                 return `${formatNumber(context.raw as number)}%`;
               },
