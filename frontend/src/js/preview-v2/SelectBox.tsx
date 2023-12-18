@@ -50,6 +50,7 @@ const List = styled("div")`
 
 const ListItem = styled("div")`
   margin-left: 5px;
+  cursor: pointer;
 `;
 
 const SxInput = styled(Input)`
@@ -99,6 +100,11 @@ export default function SelectBox<T extends SelectItem>({
           onChange={(e: { target: { value: SetStateAction<string> } }) =>
             setSearchTerm(e.target.value)
           }
+          onKeyDown={(e) => { 
+            if (e.key === "Enter") {
+              onChange(displayedItems[0]);
+            }
+          }}
           spellCheck={false}
         />
         <ArrowContainer>

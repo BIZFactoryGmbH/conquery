@@ -26,6 +26,10 @@ const Content = () => {
     (state) => state.tooltip.displayTooltip,
   );
 
+  const disableDragHandles = useSelector<StateT, boolean>(
+    (state) => state.panes.disableDragHandles,
+  );
+
   const isPreviewOpen = useSelector<StateT, boolean>(
     (state) => state.preview.isOpen,
   );
@@ -64,11 +68,11 @@ const Content = () => {
           >
             {displayTooltip ? <Tooltip /> : <ActivateTooltip />}
           </Panel>
-          <ResizeHandle disabled={!displayTooltip} />
+          <ResizeHandle disabled={!displayTooltip || disableDragHandles} />
           <Panel minSize={350} defaultSize={600}>
             <LeftPane />
           </Panel>
-          <ResizeHandle />
+          <ResizeHandle disabled={disableDragHandles} />
           <Panel minSize={250}>
             <RightPane />
           </Panel>

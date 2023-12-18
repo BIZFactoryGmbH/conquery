@@ -20,7 +20,7 @@ import SelectBox from "./SelectBox";
 import Table from "./Table";
 import { closePreview } from "./actions";
 import { PreviewStateT } from "./reducer";
-import { toggleDisplayTooltip } from "../tooltip/actions";
+import { toggleDragHandles } from "../pane/actions";
 
 const FullScreen = styled("div")`
   height: 100%;
@@ -95,10 +95,10 @@ export default function Preview() {
 
   const store = useStore();
   useEffect(() => {
-    if ((store.getState() as StateT).tooltip.displayTooltip) {
-      dispatch(toggleDisplayTooltip());
+    if (!(store.getState() as StateT).panes.disableDragHandles) {
+      dispatch(toggleDragHandles());
       return () => {
-        dispatch(toggleDisplayTooltip());
+        dispatch(toggleDragHandles());
       }
     }
   })
@@ -126,13 +126,10 @@ export default function Preview() {
           <SxSelectBox
             items={statistics?.statistics ?? ([] as PreviewStatistics[])}
             onChange={(res) => {
-              const index = statistics?.statistics.findIndex(
+              const stat = statistics?.statistics.find(
                 (stat) => stat.name === res.name,
               );
-              if (index !== undefined && index !== null) {
-                setPage(Math.floor(index / 4));
-                setSelectBoxOpen(false);
-              }
+              setPopOver(stat ?? null);
             }}
             isOpen={selectBoxOpen}
             setIsOpen={setSelectBoxOpen}
