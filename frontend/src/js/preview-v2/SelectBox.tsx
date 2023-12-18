@@ -49,8 +49,11 @@ const List = styled("div")`
 `;
 
 const ListItem = styled("div")`
-  margin-left: 5px;
+  padding: 0 5px;
   cursor: pointer;
+  &:hover{
+    background-color: ${({ theme }) => theme.col.grayVeryLight};
+  }
 `;
 
 const SxInput = styled(Input)`
