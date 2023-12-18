@@ -6,6 +6,7 @@ import { PreviewStatistics } from "../api/types";
 import IconButton from "../button/IconButton";
 
 import Diagram from "./Diagram";
+import { useHotkeys } from "react-hotkeys-hook";
 
 const Root = styled("div")``;
 
@@ -56,6 +57,21 @@ export default function Charts({
   setPage,
 }: ChartProps) {
   const diagramsOnPage = statistics.slice(page * DIAGRAMS_PER_PAGE, (page + 1) * DIAGRAMS_PER_PAGE);
+  const maxPage = Math.ceil(statistics.length / DIAGRAMS_PER_PAGE);
+
+
+  const updatePage = (change: number) => {
+    const newValue = page + change;
+    console.log(newValue);
+    if (newValue >= 0 && newValue < maxPage) {
+      setPage(newValue);
+    }
+  }
+
+  useHotkeys("left", () => updatePage(-1), [page]);
+  useHotkeys("right", () => updatePage(1), [page]);
+
+
   return (
     <>
       <Root className={className}>
@@ -78,12 +94,12 @@ export default function Charts({
             disabled={page === 0}
           />
           <span>
-            {t("preview.page")} {page + 1}/{Math.ceil(statistics.length / DIAGRAMS_PER_PAGE)}
+            {t("preview.page")} {page + 1}/{maxPage}
           </span>
           <SxIconButton
             icon={faArrowRight}
             onClick={() => setPage(page + 1)}
-            disabled={(page + 1) * DIAGRAMS_PER_PAGE >= statistics.length}
+            disabled={page === maxPage - 1}
           />
         </DirectionSelector>
       </Root>
