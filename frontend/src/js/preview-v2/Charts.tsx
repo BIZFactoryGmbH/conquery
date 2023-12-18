@@ -5,8 +5,9 @@ import { t } from "i18next";
 import { PreviewStatistics } from "../api/types";
 import IconButton from "../button/IconButton";
 
-import Diagram from "./Diagram";
 import { useHotkeys } from "react-hotkeys-hook";
+import Diagram from "./Diagram";
+import { KeyboardShortcutTooltip } from "../editor-v2/KeyboardShortcutTooltip";
 
 const Root = styled("div")``;
 
@@ -56,9 +57,11 @@ export default function Charts({
   page,
   setPage,
 }: ChartProps) {
-  const diagramsOnPage = statistics.slice(page * DIAGRAMS_PER_PAGE, (page + 1) * DIAGRAMS_PER_PAGE);
+  const diagramsOnPage = statistics.slice(
+    page * DIAGRAMS_PER_PAGE,
+    (page + 1) * DIAGRAMS_PER_PAGE,
+  );
   const maxPage = Math.ceil(statistics.length / DIAGRAMS_PER_PAGE);
-
 
   const updatePage = (change: number) => {
     const newValue = page + change;
@@ -66,11 +69,10 @@ export default function Charts({
     if (newValue >= 0 && newValue < maxPage) {
       setPage(newValue);
     }
-  }
+  };
 
   useHotkeys("left", () => updatePage(-1), [page]);
   useHotkeys("right", () => updatePage(1), [page]);
-
 
   return (
     <>
@@ -88,19 +90,23 @@ export default function Charts({
           })}
         </DiagramContainer>
         <DirectionSelector>
-          <SxIconButton
-            icon={faArrowLeft}
-            onClick={() => setPage(page - 1)}
-            disabled={page === 0}
-          />
+          <KeyboardShortcutTooltip keyname="">
+            <SxIconButton
+              icon={faArrowLeft}
+              onClick={() => setPage(page - 1)}
+              disabled={page === 0}
+            />
+          </KeyboardShortcutTooltip>
           <span>
             {t("preview.page")} {page + 1}/{maxPage}
           </span>
-          <SxIconButton
-            icon={faArrowRight}
-            onClick={() => setPage(page + 1)}
-            disabled={page === maxPage - 1}
-          />
+          <KeyboardShortcutTooltip keyname="→">
+            <SxIconButton
+              icon={faArrowRight}
+              onClick={() => setPage(page + 1)}
+              disabled={page === maxPage - 1}
+            />
+          </KeyboardShortcutTooltip>
         </DirectionSelector>
       </Root>
     </>
