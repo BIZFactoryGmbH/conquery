@@ -32,7 +32,6 @@ type DiagramProps = {
 
 const PDF_POINTS = 100;
 
-
 export default function Diagram({
   stat,
   className,
@@ -181,12 +180,10 @@ export default function Diagram({
             //grace: "%"
           },
           x: {
-            beginAtZero: true,
-            suggestedMin: stat.min,
+            min: 0,
             suggestedMax: stat.max,
             ticks: {
               callback: (index: number) => {
-                // How can I return the scale here?!
                 return formatNumber(getValueForIndex<number>(index)||0);
               },
             }
@@ -206,9 +203,6 @@ export default function Diagram({
             borderWidth: 0.5,
             padding: 10,
             callbacks: {
-              // To remove the title from the tooltip a null is needed. 
-              // This does not work with the typescript definition of chart.js
-              // -> cast to unknown and then to undefined
               title: (title) => {
                 return formatNumber(parseFloat(title[0].label))
               },
