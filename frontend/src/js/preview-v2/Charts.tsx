@@ -73,14 +73,13 @@ export default function Charts({
 
   useHotkeys("left", () => updatePage(-1), [page]);
   useHotkeys("right", () => updatePage(1), [page]);
-
   return (
     <>
       <Root className={className}>
         <DiagramContainer>
           {diagramsOnPage.map((statistic) => {
             return (
-              <div key={statistic.name}>
+              <div key={statistic.label}>
                 <SxDiagram
                   stat={statistic}
                   onClick={() => showPopup(statistic)}
