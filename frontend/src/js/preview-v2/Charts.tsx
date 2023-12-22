@@ -6,8 +6,8 @@ import { PreviewStatistics } from "../api/types";
 import IconButton from "../button/IconButton";
 
 import { useHotkeys } from "react-hotkeys-hook";
-import Diagram from "./Diagram";
 import { KeyboardShortcutTooltip } from "../editor-v2/KeyboardShortcutTooltip";
+import Diagram from "./Diagram";
 
 const Root = styled("div")``;
 

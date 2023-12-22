@@ -50,7 +50,7 @@ const List = styled("div")`
 const ListItem = styled("div")`
   padding: 0 5px;
   cursor: pointer;
-  &:hover{
+  &:hover {
     background-color: ${({ theme }) => theme.col.grayVeryLight};
   }
 `;
@@ -102,7 +102,7 @@ export default function SelectBox<T extends SelectItem>({
           onChange={(e: { target: { value: SetStateAction<string> } }) =>
             setSearchTerm(e.target.value)
           }
-          onKeyDown={(e) => { 
+          onKeyDown={(e) => {
             if (e.key === "Enter") {
               onChange(displayedItems[0]);
             }

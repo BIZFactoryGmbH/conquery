@@ -12,6 +12,7 @@ import FaIcon from "../icon/FaIcon";
 import PreviewInfo from "../preview/PreviewInfo";
 
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { toggleDragHandles } from "../pane/actions";
 import Charts from "./Charts";
 import DiagramModal from "./DiagramModal";
 import HeadlineStats from "./HeadlineStats";
@@ -20,7 +21,6 @@ import SelectBox from "./SelectBox";
 import Table from "./Table";
 import { closePreview } from "./actions";
 import { PreviewStateT } from "./reducer";
-import { toggleDragHandles } from "../pane/actions";
 
 const FullScreen = styled("div")`
   height: 100%;
@@ -99,10 +99,9 @@ export default function Preview() {
       dispatch(toggleDragHandles());
       return () => {
         dispatch(toggleDragHandles());
-      }
+      };
     }
-  })
-  
+  });
 
   useEffect(() => {
     setPage(0);
@@ -127,7 +126,7 @@ export default function Preview() {
             items={statistics?.statistics ?? ([] as PreviewStatistics[])}
             onChange={(res) => {
               const stat = statistics?.statistics.find(
-                (stat) => stat.name === res.name,
+                (stat) => stat.label === res.label,
               );
               setPopOver(stat ?? null);
             }}
