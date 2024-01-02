@@ -65,7 +65,6 @@ export default function Charts({
 
   const updatePage = (change: number) => {
     const newValue = page + change;
-    console.log(newValue);
     if (newValue >= 0 && newValue < maxPage) {
       setPage(newValue);
     }

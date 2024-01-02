@@ -101,7 +101,7 @@ export default function Preview() {
         dispatch(toggleDragHandles());
       };
     }
-  });
+  }, []);
 
   useEffect(() => {
     setPage(0);
